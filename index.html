@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DropBeam — Zero-Server WebRTC P2P Direct File Beam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="peerjs.min.js"></script>
+  <script src="qrcode.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="beam-shell">
+    <!-- Header -->
+    <header class="beam-header">
+      <div class="brand">
+        <div class="radar-dot"></div>
+        <div class="brand-text">
+          <h1>Drop<span>Beam</span></h1>
+          <span class="sub">ENCRYPTED WEBRTC P2P DATA CHANNEL</span>
+        </div>
+      </div>
+
+      <div class="status-pill" id="connStatus">
+        <span class="status-dot"></span>
+        <span id="statusText">INITIALIZING P2P RADAR...</span>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="beam-stage">
+      <!-- Left: Connection & Room Pairing -->
+      <section class="card connection-card">
+        <h2>1. Device Pairing</h2>
+        <p class="card-desc">Scan QR code or enter room code on receiver device to establish direct WebRTC peer channel.</p>
+
+        <div class="pairing-box">
+          <div class="qr-container" id="qrContainer">
+            <!-- QR Canvas inserted via JS -->
+          </div>
+          <div class="pin-display">
+            <span class="pin-label">YOUR ROOM PIN</span>
+            <span class="pin-code" id="myPin">------</span>
+          </div>
+        </div>
+
+        <div class="join-divider"><span>OR JOIN EXISTING ROOM</span></div>
+
+        <div class="join-input-group">
+          <input type="text" id="targetPinInput" placeholder="Enter 6-digit PIN..." maxlength="6">
+          <button class="btn-connect" onclick="connectToPeer()">CONNECT</button>
+        </div>
+
+        <div class="security-badge">
+          <span>🔒 End-to-End Encrypted (DTLS/SRTP)</span>
+          <p>Files travel directly peer-to-peer. Zero bytes are stored on any cloud server.</p>
+        </div>
+      </section>
+
+      <!-- Right: File Transfer Stage -->
+      <section class="card transfer-card">
+        <h2>2. Direct File Beam</h2>
+        <p class="card-desc">Drop files to stream directly through the encrypted WebRTC data channel.</p>
+
+        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+          <input type="file" id="fileInput" multiple style="display:none" onchange="handleFileSelect(event)">
+          <div class="drop-inner">
+            <div class="beam-icon">⚡</div>
+            <h3>Drop Files Here to Beam</h3>
+            <p>Or click to browse from Finder / Files</p>
+          </div>
+        </div>
+
+        <!-- Transfer Telemetry Bar -->
+        <div class="telemetry-bar" id="telemetryBar" style="display:none">
+          <div class="telemetry-header">
+            <span class="file-name" id="telFileName">document.pdf</span>
+            <span class="transfer-speed" id="telSpeed">0.0 MB/s</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="telProgressFill"></div>
+          </div>
+          <div class="telemetry-footer">
+            <span id="telBytes">0 MB / 0 MB</span>
+            <span id="telEta">ETA: --</span>
+          </div>
+        </div>
+
+        <!-- File Transfer History / Queue -->
+        <div class="transfers-list" id="transfersList">
+          <!-- Transferred item cards -->
+        </div>
+      </section>
+    </main>
+
+    <footer class="beam-footer">
+      <span>Zero Server Storage • Local Wi-Fi Gigabit Speed • SHA-256 Verified</span>
+      <span>Designed by Nilkanth Desai</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
