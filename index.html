@@ -69,6 +69,10 @@
             <div class="beam-icon">⚡</div>
             <h3>Drop Files Here to Beam</h3>
             <p>Or click to browse from Finder / Files</p>
+            <div style="margin-top: 14px; display: flex; gap: 10px; justify-content: center;">
+              <button class="btn-connect" style="padding: 8px 16px; font-size: 11px;" onclick="event.stopPropagation(); document.getElementById('fileInput').click()">📁 Select Files</button>
+              <button class="item-btn" style="padding: 8px 16px; font-size: 11px; background: rgba(56, 189, 248, 0.15); border-color: var(--accent-cyan); color: var(--accent-cyan);" onclick="event.stopPropagation(); testDemoBeam()">🚀 Test Demo Beam (2 MB)</button>
+            </div>
           </div>
         </div>
 
